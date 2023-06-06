@@ -1,6 +1,8 @@
 
 package br.unipar.central.models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Beatr
@@ -8,14 +10,13 @@ package br.unipar.central.models;
 public class Banco extends AbstractBaseEntiny{
     
     private  String nome;
-    private Agencia agencia;
+    private ArrayList<Agencia> agencias = new ArrayList<>();
 
     public Banco() {
     }
 
-    public Banco(String nome, Agencia agencia) {
+    public Banco(String nome) {
         this.nome = nome;
-        this.agencia = agencia;
     }
 
     public String getNome() {
@@ -26,17 +27,17 @@ public class Banco extends AbstractBaseEntiny{
         this.nome = nome;
     }
 
-    public Agencia getAgencia() {
-        return agencia;
+    public ArrayList<Agencia> getAgencias() {
+        return agencias;
     }
 
-    public void setAgencia(Agencia agencia) {
-        this.agencia = agencia;
+    public void setAgencias(ArrayList<Agencia> agencias) {
+        this.agencias = agencias;
     }
 
     @Override
     public String toString() {
-        return "Banco{" + "nome=" + nome + ", agencia=" + agencia + '}';
+        return "Banco{" + "nome=" + nome + ", agencias=" + agencias + '}';
     }
 
 }

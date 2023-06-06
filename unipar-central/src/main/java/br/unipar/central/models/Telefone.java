@@ -5,25 +5,25 @@ package br.unipar.central.models;
  *
  * @author Beatr
  */
-public class Telefone {
+public class Telefone extends AbstractBaseEntiny{
     
-    private int id;
     private String numero;
+    private String operadora;
 
     public Telefone() {
     }
 
-    public Telefone(int id, String numero) {
-        this.id = id;
+    public Telefone(String numero, String operadora) {
         this.numero = numero;
+        this.operadora = operadora;
     }
 
-    public int getId() {
-        return id;
+    public String getOperadora() {
+        return operadora;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOperadora(String operadora) {
+        this.operadora = operadora;
     }
 
     public String getNumero() {
@@ -36,7 +36,7 @@ public class Telefone {
 
     @Override
     public String toString() {
-        return "Telefone{" + "id=" + id + ", numero=" + numero + '}';
+        return "Telefone{" + "numero=" + numero + ", operadora=" + operadora + '}';
     }
 
 }

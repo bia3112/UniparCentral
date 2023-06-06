@@ -5,53 +5,31 @@ package br.unipar.central.models;
  *
  * @author Beatr
  */
-public class Conta{
+public class Conta extends AbstractBaseEntiny{
     
-    private int id;
-    private String conta; 
-    private String agencia;
+    private String numero;
     private String tipo;
     private int digito;
     private double saldo;
     private Pessoa pessoa;
-    private Transacao transacao;
 
     public Conta() {
     }
 
-    public Conta(int id, String conta, String agencia, String tipo, int digito, double saldo, Pessoa pessoa, Transacao transacao) {
-        this.id = id;
-        this.conta = conta;
-        this.agencia = agencia;
+    public Conta(String numero, String tipo, int digito, double saldo, Pessoa pessoa) {
+        this.numero = numero;
         this.tipo = tipo;
         this.digito = digito;
         this.saldo = saldo;
         this.pessoa = pessoa;
-        this.transacao = transacao;
     }
 
-    public int getId() {
-        return id;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getConta() {
-        return conta;
-    }
-
-    public void setConta(String conta) {
-        this.conta = conta;
-    }
-
-    public String getAgencia() {
-        return agencia;
-    }
-
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     public String getTipo() {
@@ -86,17 +64,9 @@ public class Conta{
         this.pessoa = pessoa;
     }
 
-    public Transacao getTransacao() {
-        return transacao;
-    }
-
-    public void setTransacao(Transacao transacao) {
-        this.transacao = transacao;
-    }
-
     @Override
     public String toString() {
-        return "Conta{" + "id=" + id + ", conta=" + conta + ", agencia=" + agencia + ", tipo=" + tipo + ", digito=" + digito + ", saldo=" + saldo + ", pessoa=" + pessoa + ", transacao=" + transacao + '}';
+        return "Conta{" + "numero=" + numero + ", tipo=" + tipo + ", digito=" + digito + ", saldo=" + saldo + ", pessoa=" + pessoa + '}';
     }
 
 }

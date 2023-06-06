@@ -7,21 +7,21 @@ import java.sql.Date;
  *
  * @author Beatr
  */
-public class PessoaFisica extends Pessoa{
+public class PessoaFisica extends AbstractBaseEntiny{
     
     private String nome;
-    private String documento;
-    private String tipoPessoa;
-    private Date dataDeNascimento;
+    private String cpj;
+    private String rg;
+    private Date dtNascimento;
 
     public PessoaFisica() {
     }
 
-    public PessoaFisica(String nome, String documento, String tipoPessoa, Date dataDeNascimento) {
+    public PessoaFisica(String nome, String cpj, String rg, Date dtNascimento) {
         this.nome = nome;
-        this.documento = documento;
-        this.tipoPessoa = tipoPessoa;
-        this.dataDeNascimento = dataDeNascimento;
+        this.cpj = cpj;
+        this.rg = rg;
+        this.dtNascimento = dtNascimento;
     }
 
     public String getNome() {
@@ -32,33 +32,33 @@ public class PessoaFisica extends Pessoa{
         this.nome = nome;
     }
 
-    public String getDocumento() {
-        return documento;
+    public String getCpj() {
+        return cpj;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setCpj(String cpj) {
+        this.cpj = cpj;
     }
 
-    public String getTipoPessoa() {
-        return tipoPessoa;
+    public String getRg() {
+        return rg;
     }
 
-    public void setTipoPessoa(String tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
+    public void setRg(String rg) {
+        this.rg = rg;
     }
 
-    public Date getDataDeNascimento() {
-        return dataDeNascimento;
+    public Date getDtNascimento() {
+        return dtNascimento;
     }
 
-    public void setDataDeNascimento(Date dataDeNascimento) {
-        this.dataDeNascimento = dataDeNascimento;
+    public void setDtNascimento(Date dtNascimento) {
+        this.dtNascimento = dtNascimento;
     }
 
     @Override
     public String toString() {
-        return "PessoaFisica{" + "nome=" + nome + ", documento=" + documento + ", tipoPessoa=" + tipoPessoa + ", dataDeNascimento=" + dataDeNascimento + '}';
+        return "PessoaFisica{" + "nome=" + nome + ", cpj=" + cpj + ", rg=" + rg + ", dtNascimento=" + dtNascimento + '}';
     }
-    
+
 }

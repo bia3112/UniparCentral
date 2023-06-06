@@ -37,7 +37,17 @@ public class EnderecoService {
         if(endereco.getBairro().length() > 80){
             throw new TamanhoCampoInvalidoException("Bairro",80);
         }
-
+        
+        if(endereco.getComplemento() == null ||
+                endereco.getComplemento().isBlank() ||
+                endereco.getComplemento().isEmpty()){
+            throw new CampoNaoInformadoException("Complemento");
+        }
+        
+        if(endereco.getComplemento().length() > 120){
+            throw new TamanhoCampoInvalidoException("Complemento", 120);
+        }
+     
     }
     
 }

@@ -1,8 +1,11 @@
 
 package br.unipar.central;
 
+import br.unipar.central.models.Estado;
 import br.unipar.central.models.Pais;
+import br.unipar.central.repositories.EstadoDAO;
 import br.unipar.central.services.PaisService;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,28 +16,32 @@ public class UniparCentral {
 
     public static void main(String[] args) {
 
-        try{
+        try {
             
             PaisService service = new PaisService();
-            //List<Pais> resultado = service.findAll(); montra todos os dados da tabela
-
-            Pais resultado = service.findById(10584564);
-            System.out.println(resultado.toString());
+            //List<Pais> resultado = service.findAll();
             
-            Pais pais = new Pais();
-            pais.setId(234);
-            pais.setNome("");
-            pais.setRegistroAcademico("17221");
-            pais.setSigla("JO");
+            //System.out.println(resultado.toString());
+            
+           // Pais pais = new Pais();
+            //pais.setId(525257);
+            //pais.setNome("PAIS PROF BOSINGGGGGGPAIS");
+            //pais.setRegistroAcademico("17221");
+            //pais.setSigla("B8");
             
             //service.insert(pais);
             //service.update(pais);
-            //service.delete(234);
-        
-        }catch (Exception ex){
+            //service.delete(525257);
             
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            EstadoDAO estadoDAO = new EstadoDAO();
+            List<Estado> listaEstados = estadoDAO.findAll();
             
+            System.out.println(listaEstados.toString());
+            
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, 
+                    ex.getMessage());
         }
             
     }

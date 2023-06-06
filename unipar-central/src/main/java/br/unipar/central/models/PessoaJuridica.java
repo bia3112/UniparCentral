@@ -5,7 +5,7 @@ package br.unipar.central.models;
  *
  * @author Beatr
  */
-public class PessoaJuridica extends Pessoa{
+public class PessoaJuridica extends AbstractBaseEntiny{
     
     private String cnpj;
     private String razaoSocial;

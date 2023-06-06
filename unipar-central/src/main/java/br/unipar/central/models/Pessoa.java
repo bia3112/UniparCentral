@@ -1,33 +1,26 @@
 
 package br.unipar.central.models;
 
+import br.unipar.central.enums.TipoPessoaEnum;
 import java.util.ArrayList;
 
 /**
  *
  * @author Beatr
  */
-public class Pessoa {
+public class Pessoa extends AbstractBaseEntiny{
     
-    private int id;
     private String email;
+    private TipoPessoaEnum tipoPessoa;
     private ArrayList<Endereco> enderecos = new ArrayList<>();
-    private ArrayList<Telefone> telefones = new ArrayList<>();
+    private ArrayList<Telefone> telefones = new ArrayList<>();;
 
     public Pessoa() {
     }
 
-    public Pessoa(int id, String email) {
-        this.id = id;
+    public Pessoa(String email, TipoPessoaEnum tipoPessoa) {
         this.email = email;
-    }
-    
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.tipoPessoa = tipoPessoa;
     }
 
     public ArrayList<Endereco> getEnderecos() {
@@ -54,9 +47,17 @@ public class Pessoa {
         this.email = email;
     }
 
+    public TipoPessoaEnum getTipoPessoa() {
+        return tipoPessoa;
+    }
+
+    public void setTipoPessoa(TipoPessoaEnum tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
+    }
+
     @Override
     public String toString() {
-        return "Pessoa{" + "id=" + id + ", email=" + email + ", enderecos=" + enderecos + ", telefones=" + telefones + '}';
+        return "Pessoa{" + "email=" + email + ", tipoPessoa=" + tipoPessoa + ", enderecos=" + enderecos + ", telefones=" + telefones + '}';
     }
 
 }

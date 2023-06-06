@@ -1,37 +1,29 @@
 
 package br.unipar.central.models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Beatr
  */
-public class Agencia extends Telefone{
+public class Agencia extends AbstractBaseEntiny{
     
-    private int id;
     private String codigo;
     private String razaoSocial;
     private String cnpj;
-    private Conta conta;
+    private ArrayList<Telefone> telefones = new ArrayList<>();
+    private ArrayList<Conta> contas = new ArrayList<>();
 
     public Agencia() {
     }
 
-    public Agencia(int id, String codigo, String razaoSocial, String cnpj, Conta conta) {
-        this.id = id;
+    public Agencia(String codigo, String razaoSocial, String cnpj) {
         this.codigo = codigo;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
-        this.conta = conta;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    
     public String getCodigo() {
         return codigo;
     }
@@ -56,17 +48,25 @@ public class Agencia extends Telefone{
         this.cnpj = cnpj;
     }
 
-    public Conta getConta() {
-        return conta;
+    public ArrayList<Telefone> getTelefones() {
+        return telefones;
     }
 
-    public void setConta(Conta conta) {
-        this.conta = conta;
+    public void setTelefones(ArrayList<Telefone> telefones) {
+        this.telefones = telefones;
+    }
+
+    public ArrayList<Conta> getContas() {
+        return contas;
+    }
+
+    public void setContas(ArrayList<Conta> contas) {
+        this.contas = contas;
     }
 
     @Override
     public String toString() {
-        return "Agencia{" + "id=" + id + ", codigo=" + codigo + ", razaoSocial=" + razaoSocial + ", cnpj=" + cnpj + ", conta=" + conta + '}';
+        return "Agencia{" + "codigo=" + codigo + ", razaoSocial=" + razaoSocial + ", cnpj=" + cnpj + ", telefones=" + telefones + ", contas=" + contas + '}';
     }
- 
+
 }
