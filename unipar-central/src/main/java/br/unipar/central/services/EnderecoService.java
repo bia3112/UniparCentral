@@ -13,11 +13,11 @@ import br.unipar.central.models.Endereco;
 public class EnderecoService {
     
     public void validar(Endereco endereco) throws EntidadeNaoInformadaException, CampoNaoInformadoException, TamanhoCampoInvalidoException{
-        
+
         if(endereco == null){
             throw new EntidadeNaoInformadaException("Endereco");
         }
-        
+            
         if(endereco.getLogradouro() == null || 
             endereco.getLogradouro().isBlank() ||
             endereco.getLogradouro().isEmpty()){

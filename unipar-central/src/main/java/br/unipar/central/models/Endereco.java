@@ -5,9 +5,8 @@ package br.unipar.central.models;
  *
  * @author Beatr
  */
-public class Endereco {
+public class Endereco extends AbstractBaseEntiny{
     
-    private int id;
     private String logradouro;
     private int numero;
     private String bairro;
@@ -18,22 +17,13 @@ public class Endereco {
     public Endereco() {
     }
 
-    public Endereco(int id, String logradouro, int numero, String bairro, int cep, String complemento, Cidade cidade) {
-        this.id = id;
+    public Endereco(String logradouro, int numero, String bairro, int cep, String complemento, Cidade cidade) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.bairro = bairro;
         this.cep = cep;
         this.complemento = complemento;
         this.cidade = cidade;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getLogradouro() {
@@ -86,7 +76,7 @@ public class Endereco {
 
     @Override
     public String toString() {
-        return "Endereco{" + "id=" + id + ", logradouro=" + logradouro + ", numero=" + numero + ", bairro=" + bairro + ", cep=" + cep + ", complemento=" + complemento + ", cidade=" + cidade + '}';
+        return "Endereco{" + "logradouro=" + logradouro + ", numero=" + numero + ", bairro=" + bairro + ", cep=" + cep + ", complemento=" + complemento + ", cidade=" + cidade + '}';
     }
  
 }
