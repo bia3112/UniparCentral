@@ -10,16 +10,16 @@ import java.sql.Date;
 public class PessoaFisica extends AbstractBaseEntiny{
     
     private String nome;
-    private String cpj;
+    private String cpf;
     private String rg;
     private Date dtNascimento;
 
     public PessoaFisica() {
     }
 
-    public PessoaFisica(String nome, String cpj, String rg, Date dtNascimento) {
+    public PessoaFisica(String nome, String cpf, String rg, Date dtNascimento) {
         this.nome = nome;
-        this.cpj = cpj;
+        this.cpf = cpf;
         this.rg = rg;
         this.dtNascimento = dtNascimento;
     }
@@ -32,12 +32,12 @@ public class PessoaFisica extends AbstractBaseEntiny{
         this.nome = nome;
     }
 
-    public String getCpj() {
-        return cpj;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCpj(String cpj) {
-        this.cpj = cpj;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getRg() {
@@ -58,7 +58,7 @@ public class PessoaFisica extends AbstractBaseEntiny{
 
     @Override
     public String toString() {
-        return "PessoaFisica{" + "nome=" + nome + ", cpj=" + cpj + ", rg=" + rg + ", dtNascimento=" + dtNascimento + '}';
+        return "PessoaFisica{" + "nome=" + nome + ", cpf=" + cpf + ", rg=" + rg + ", dtNascimento=" + dtNascimento + '}';
     }
 
 }
