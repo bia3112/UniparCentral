@@ -31,11 +31,8 @@ public class TransacaoService {
         if(transacao.getValor(String.valueOf(this.getValor())) == null || 
             transacao.getValor(String.valueOf(getValor)).isBlank() ||
             transacao.getValor(String.valueOf(getValor)).isEmpty()){
-            throw new CampoNaoInformadoException("Tipo");
+            throw new CampoNaoInformadoException("Valor");
         }
-        
-        if(transacao.getValor().length() > 30){
-            throw new TamanhoCampoInvalidoException("Tipo",30);
-        }
-        
+
     }
+}
