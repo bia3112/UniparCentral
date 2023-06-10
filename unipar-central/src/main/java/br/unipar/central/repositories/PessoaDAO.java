@@ -1,8 +1,8 @@
 
 package br.unipar.central.repositories;
 
-import br.unipar.central.models.Agencia;
-import br.unipar.central.models.Conta;
+import br.unipar.central.models.Endereco;
+import br.unipar.central.models.Pessoa;
 import br.unipar.central.models.Telefone;
 import br.unipar.central.utils.DataBaseUtils;
 import java.sql.Array;
@@ -17,31 +17,31 @@ import java.util.List;
  *
  * @author Beatr
  */
-public class AgenciaDAO {
+public class PessoaDAO {
     
-    private static final String INSERT = "INSERT INTO AGENCIA" 
-            + "(ID, RA, CODIGO, RAZAOSOCIAL, CNPJ, TELEFONE_ID, CONTA_ID) "
-            + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT = "INSERT INTO PESSOA" 
+            + "(ID, RA, EMAIL, ENDERECO_ID, TELEFONE_ID) "
+            + "VALUES(?, ?, ?, ?, ?)";
     
     private static final String FIND_ALL =
-            "SELECT ID, RA, CODIGO, RAZAOSOCIAL, CNPJ, TELEFONE_ID, CONTA_ID " +
-            "FROM AGENCIA";
+            "SELECT ID, RA, EMAIL, ENDERECO_ID, TELEFONE_ID " +
+            "FROM PESSOA";
     
     private static final String FIND_BY_ID =
-            "SELECT ID, RA, CODIGO, RAZAOSOCIAL, CNPJ, TELEFONE_ID, CONTA_ID " +
-            "FROM AGENCIA " +
+            "SELECT ID, RA, EMAIL, ENDERECO_ID, TELEFONE_ID " +
+            "FROM PESSOA " +
             "WHERE ID = ?";
     
     private static final String DELETE_BY_ID = 
-            "DELETE FROM AGENCIA WHERE ID = ?";
+            "DELETE FROM PESSOA WHERE ID = ?";
     
     private static final String UPDATE = 
-            "UPDATE AGENCIA SET RA = ?, CODIGO = ?, RAZAOSOCIAL = ?, " + 
-            " CNPJ = ?, TELEFONE_ID = ?, CONTA_ID = ? " +
+            "UPDATE PESSOA SET RA = ?, EMAIL = ?, ENDERECO_ID = ?, " + 
+            " TELEFONE_ID = ? " +
             "WHERE ID = ?";
     
-    public List<Agencia> findall() throws SQLException{
-        ArrayList<Agencia> retorno = new ArrayList<>();
+    public List<Pessoa> findall() throws SQLException{
+        ArrayList<Pessoa> retorno = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -52,21 +52,19 @@ public class AgenciaDAO {
             rs = pstmt.executeQuery();
             
             while(rs.next()){                
-                Agencia agencia = new Agencia();
+                Pessoa pessoa = new Pessoa();
                 
-                agencia.setId(rs.getInt("ID"));
-                agencia.setRegistroAcademico(rs.getString("RA"));
-                agencia.setCodigo(rs.getString("CODIGO"));
-                agencia.setRazaoSocial(rs.getString("RAZAOSOCIAL"));
-                agencia.setCnpj(rs.getString("CNPJ"));
+                pessoa.setId(rs.getInt("ID"));
+                pessoa.setRegistroAcademico(rs.getString("RA"));
+                pessoa.setEmail(rs.getString("EMAIL"));
+                ArrayList<Endereco> enderecos = new ArrayList<>();
+                    enderecos.add(new EnderecoDAO().findById(rs.getInt("ENDERECO_ID")));
+                    pessoa.setEnderecos(enderecos);          
                 ArrayList<Telefone> telefones = new ArrayList<>();
                     telefones.add(new TelefoneDAO().findById(rs.getInt("TELEFONE_ID")));
-                    agencia.setTelefones(telefones);
-                ArrayList<Conta> contas = new ArrayList<>();
-                    contas.add(new ContaDAO().findById(rs.getInt("CONTA_ID")));
-                    agencia.setContas(contas);
-                
-                retorno.add(agencia);   
+                    pessoa.setTelefones(telefones);
+               
+                retorno.add(pessoa);   
             }          
         }finally{            
             if (rs != null)
@@ -81,12 +79,12 @@ public class AgenciaDAO {
         return retorno;
     }
     
-    public Agencia findById(int id) throws SQLException {
+    public Pessoa findById(int id) throws SQLException {
         
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        Agencia retorno = null;
+        Pessoa retorno = null;
         
         try {
             
@@ -97,20 +95,17 @@ public class AgenciaDAO {
             rs = pstmt.executeQuery();
             
             while (rs.next()) {
-               retorno = new Agencia(); 
+               retorno = new Pessoa(); 
                
                retorno.setId(rs.getInt("ID"));
                retorno.setRegistroAcademico(rs.getString("RA"));
-               retorno.setCodigo(rs.getString("CODIGO"));
-               retorno.setRazaoSocial(rs.getString("RAZAOSOCIAL"));
-               retorno.setCnpj(rs.getString("CNPJ"));
-               
-               ArrayList<Telefone> telefones = new ArrayList<>();
+               retorno.setEmail(rs.getString("EMAIL"));
+                ArrayList<Endereco> enderecos = new ArrayList<>();
+                    enderecos.add(new EnderecoDAO().findById(rs.getInt("ENDERECO_ID")));
+                    retorno.setEnderecos(enderecos);          
+                ArrayList<Telefone> telefones = new ArrayList<>();
                     telefones.add(new TelefoneDAO().findById(rs.getInt("TELEFONE_ID")));
                     retorno.setTelefones(telefones);
-               ArrayList<Conta> contas = new ArrayList<>();
-                    contas.add(new ContaDAO().findById(rs.getInt("CONTA_ID")));
-                    retorno.setContas(contas);
             }           
         } finally { 
             if (rs != null)
@@ -125,7 +120,7 @@ public class AgenciaDAO {
         return retorno;
     }
     
-    public void insert(Agencia agencia) throws SQLException {
+    public void insert(Pessoa pessoa) throws SQLException {
         
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -134,15 +129,13 @@ public class AgenciaDAO {
             
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(INSERT);
-            pstmt.setInt(1, agencia.getId());
-            pstmt.setString(2, agencia.getRegistroAcademico());
-            pstmt.setString(3, agencia.getCodigo());
-            pstmt.setString(4, agencia.getRazaoSocial());
-            pstmt.setString(5, agencia.getCnpj());
-            Array telefoneIdsArray = conn.createArrayOf("INTEGER", agencia.getTelefones().stream().map(Telefone::getId).toArray());
-            pstmt.setArray(6, telefoneIdsArray);
-            Array contaIdsArray = conn.createArrayOf("INTEGER", agencia.getContas().stream().map(Conta::getId).toArray());
-            pstmt.setArray(7, contaIdsArray);
+            pstmt.setInt(1, pessoa.getId());
+            pstmt.setString(2, pessoa.getRegistroAcademico());
+            pstmt.setString(3, pessoa.getEmail());
+            Array enderecoIdsArray = conn.createArrayOf("INTEGER", pessoa.getEnderecos().stream().map(Endereco::getId).toArray());
+            pstmt.setArray(4, enderecoIdsArray);
+            Array telefoneIdsArray = conn.createArrayOf("INTEGER", pessoa.getTelefones().stream().map(Telefone::getId).toArray());
+            pstmt.setArray(5, telefoneIdsArray);
 
             pstmt.executeUpdate();   
             
@@ -155,7 +148,7 @@ public class AgenciaDAO {
         }
     }
         
-        public void update(Agencia agencia) throws SQLException {
+        public void update(Pessoa pessoa) throws SQLException {
         
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -164,15 +157,13 @@ public class AgenciaDAO {
             
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(UPDATE);
-            pstmt.setInt(1, agencia.getId());
-            pstmt.setString(2, agencia.getRegistroAcademico());
-            pstmt.setString(3, agencia.getCodigo());
-            pstmt.setString(4, agencia.getRazaoSocial());
-            pstmt.setString(5, agencia.getCnpj());
-            Array telefoneIdsArray = conn.createArrayOf("INTEGER", agencia.getTelefones().stream().map(Telefone::getId).toArray());
-            pstmt.setArray(6, telefoneIdsArray);
-            Array contaIdsArray = conn.createArrayOf("INTEGER", agencia.getContas().stream().map(Conta::getId).toArray());
-            pstmt.setArray(7, contaIdsArray);
+            pstmt.setInt(1, pessoa.getId());
+            pstmt.setString(2, pessoa.getRegistroAcademico());
+            pstmt.setString(3, pessoa.getEmail());
+            Array enderecoIdsArray = conn.createArrayOf("INTEGER", pessoa.getEnderecos().stream().map(Endereco::getId).toArray());
+            pstmt.setArray(4, enderecoIdsArray);
+            Array telefoneIdsArray = conn.createArrayOf("INTEGER", pessoa.getTelefones().stream().map(Telefone::getId).toArray());
+            pstmt.setArray(5, telefoneIdsArray);
             
             pstmt.executeUpdate();
             
@@ -207,4 +198,5 @@ public class AgenciaDAO {
                 conn.close();
         }     
     }   
+    
 }
