@@ -22,8 +22,7 @@ public class ContaService {
             conta.getNumero().isBlank() ||
             conta.getNumero().isEmpty()){
             throw new CampoNaoInformadoException("Numero");
-        }
-        
+        } 
         if(conta.getNumero().length() > 10){
             throw new TamanhoCampoInvalidoException("Numero",10);
         }
@@ -32,12 +31,23 @@ public class ContaService {
             conta.getTipo().isBlank() ||
             conta.getTipo().isEmpty()){
             throw new CampoNaoInformadoException("Tipo");
-        }
-        
+        } 
         if(conta.getTipo().length() > 20){
             throw new TamanhoCampoInvalidoException("Tipo",20);
         }
         
+        if(String.valueOf(conta.getDigito()) == null ||
+                String.valueOf(conta.getDigito()).isBlank() ||
+                String.valueOf(conta.getDigito()).isEmpty()){
+            throw new CampoNaoInformadoException("Digito");
+        }
+        
+        if(String.valueOf(conta.getSaldo()) == null ||
+                String.valueOf(conta.getSaldo()).isBlank() ||
+                String.valueOf(conta.getSaldo()).isEmpty()){
+            throw new CampoNaoInformadoException("Saldo");
+        }
+            
     }
     
 }

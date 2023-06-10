@@ -22,8 +22,7 @@ public class EnderecoService {
             endereco.getLogradouro().isBlank() ||
             endereco.getLogradouro().isEmpty()){
             throw new CampoNaoInformadoException("Logradouro");
-        }
-        
+        }       
         if(endereco.getLogradouro().length() > 120){
             throw new TamanhoCampoInvalidoException("Logradouro",120);
         }
@@ -32,8 +31,7 @@ public class EnderecoService {
             endereco.getBairro().isBlank() ||
             endereco.getBairro().isEmpty()){
             throw new CampoNaoInformadoException("Bairro");
-        }
-        
+        }       
         if(endereco.getBairro().length() > 80){
             throw new TamanhoCampoInvalidoException("Bairro",80);
         }
@@ -43,9 +41,20 @@ public class EnderecoService {
                 endereco.getComplemento().isEmpty()){
             throw new CampoNaoInformadoException("Complemento");
         }
-        
         if(endereco.getComplemento().length() > 120){
             throw new TamanhoCampoInvalidoException("Complemento", 120);
+        }
+        
+        if(String.valueOf(endereco.getNumero()) == null ||
+                String.valueOf(endereco.getNumero()).isBlank() ||
+                String.valueOf(endereco.getNumero()).isEmpty()){
+            throw new CampoNaoInformadoException("Numero");
+        }
+        
+        if(String.valueOf(endereco.getCep()) == null ||
+                String.valueOf(endereco.getCep()).isBlank() ||
+                String.valueOf(endereco.getCep()).isEmpty()){
+            throw new CampoNaoInformadoException("Cep");
         }
      
     }

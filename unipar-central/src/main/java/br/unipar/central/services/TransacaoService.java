@@ -5,6 +5,7 @@ import br.unipar.central.exceptions.CampoNaoInformadoException;
 import br.unipar.central.exceptions.EntidadeNaoInformadaException;
 import br.unipar.central.exceptions.TamanhoCampoInvalidoException;
 import br.unipar.central.models.Transacao;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -27,11 +28,17 @@ public class TransacaoService {
         if(transacao.getTipo().length() > 30){
             throw new TamanhoCampoInvalidoException("Tipo",30);
         }
-
-        if(transacao.getValor(String.valueOf(this.getValor())) == null || 
-            transacao.getValor(String.valueOf(getValor)).isBlank() ||
-            transacao.getValor(String.valueOf(getValor)).isEmpty()){
+ 
+        if(String.valueOf(transacao.getValor()) == null || 
+                String.valueOf(transacao.getValor()).isBlank() ||
+                String.valueOf(transacao.getValor()).isEmpty()){
             throw new CampoNaoInformadoException("Valor");
+        }
+        
+        if(transacao.getDataHora() == null ||
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(transacao.getDataHora()).isBlank() ||
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(transacao.getDataHora()).isEmpty()){
+            throw new CampoNaoInformadoException("DataHora");
         }
 
     }
