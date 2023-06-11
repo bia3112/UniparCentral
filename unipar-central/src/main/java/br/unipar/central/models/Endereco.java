@@ -8,9 +8,9 @@ package br.unipar.central.models;
 public class Endereco extends AbstractBaseEntiny{
     
     private String logradouro;
-    private int numero;
+    private String numero;
     private String bairro;
-    private int cep;
+    private String cep;
     private String complemento;
     private Pessoa pessoa;
     private Cidade cidade;
@@ -18,7 +18,7 @@ public class Endereco extends AbstractBaseEntiny{
     public Endereco() {
     }
 
-    public Endereco(String logradouro, int numero, String bairro, int cep, String complemento, Pessoa pessoa, Cidade cidade) {
+    public Endereco(String logradouro, String numero, String bairro, String cep, String complemento, Pessoa pessoa, Cidade cidade) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.bairro = bairro;
@@ -36,11 +36,11 @@ public class Endereco extends AbstractBaseEntiny{
         this.logradouro = logradouro;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
@@ -52,11 +52,11 @@ public class Endereco extends AbstractBaseEntiny{
         this.bairro = bairro;
     }
 
-    public int getCep() {
+    public String getCep() {
         return cep;
     }
 
-    public void setCep(int cep) {
+    public void setCep(String cep) {
         this.cep = cep;
     }
 
@@ -68,14 +68,6 @@ public class Endereco extends AbstractBaseEntiny{
         this.complemento = complemento;
     }
 
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-
     public Cidade getCidade() {
         return cidade;
     }
@@ -84,9 +76,16 @@ public class Endereco extends AbstractBaseEntiny{
         this.cidade = cidade;
     }
 
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
+
     @Override
     public String toString() {
         return "Endereco{" + "logradouro=" + logradouro + ", numero=" + numero + ", bairro=" + bairro + ", cep=" + cep + ", complemento=" + complemento + ", pessoa=" + pessoa + ", cidade=" + cidade + '}';
     }
- 
 }

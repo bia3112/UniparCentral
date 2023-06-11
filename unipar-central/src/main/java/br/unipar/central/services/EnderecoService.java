@@ -5,6 +5,9 @@ import br.unipar.central.exceptions.CampoNaoInformadoException;
 import br.unipar.central.exceptions.EntidadeNaoInformadaException;
 import br.unipar.central.exceptions.TamanhoCampoInvalidoException;
 import br.unipar.central.models.Endereco;
+import br.unipar.central.repositories.EnderecoDAO;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -32,8 +35,8 @@ public class EnderecoService {
             endereco.getBairro().isEmpty()){
             throw new CampoNaoInformadoException("Bairro");
         }       
-        if(endereco.getBairro().length() > 80){
-            throw new TamanhoCampoInvalidoException("Bairro",80);
+        if(endereco.getBairro().length() > 120){
+            throw new TamanhoCampoInvalidoException("Bairro",120);
         }
         
         if(endereco.getComplemento() == null ||
@@ -41,22 +44,80 @@ public class EnderecoService {
                 endereco.getComplemento().isEmpty()){
             throw new CampoNaoInformadoException("Complemento");
         }
-        if(endereco.getComplemento().length() > 120){
-            throw new TamanhoCampoInvalidoException("Complemento", 120);
+        if(endereco.getComplemento().length() > 20){
+            throw new TamanhoCampoInvalidoException("Complemento", 20);
         }
         
-        if(String.valueOf(endereco.getNumero()) == null ||
-                String.valueOf(endereco.getNumero()).isBlank() ||
-                String.valueOf(endereco.getNumero()).isEmpty()){
+        if(endereco.getNumero() == null ||
+                endereco.getNumero().isBlank() ||
+                endereco.getNumero().isEmpty()){
             throw new CampoNaoInformadoException("Numero");
         }
+        if(endereco.getNumero().length() > 10){
+            throw new TamanhoCampoInvalidoException("Numero", 10);
+        }
         
-        if(String.valueOf(endereco.getCep()) == null ||
-                String.valueOf(endereco.getCep()).isBlank() ||
-                String.valueOf(endereco.getCep()).isEmpty()){
+        if(endereco.getCep() == null ||
+                endereco.getCep().isBlank() ||
+                endereco.getCep().isEmpty()){
             throw new CampoNaoInformadoException("Cep");
         }
-     
+        if(endereco.getCep().length() > 10){
+            throw new TamanhoCampoInvalidoException("Cep", 10);
+        } 
+    }
+    
+    public List<Endereco> findAll() throws SQLException{
+        
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        List<Endereco> resultado = enderecoDAO.findAll();
+        
+        return resultado;
+    }
+    
+    public Endereco findById(int id) throws SQLException, TamanhoCampoInvalidoException, Exception{
+        
+        if(id <= 0)
+            throw new TamanhoCampoInvalidoException("id", 1);
+        
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        
+        Endereco retorno = enderecoDAO.findById(id);
+        
+        if(retorno == null)
+            throw new Exception("Não foi possível encontrar um endereco com o id " + id + " informado.");
+        
+        return retorno;
+        
+    }
+    
+    public void insert(Endereco endereco)throws SQLException, 
+            EntidadeNaoInformadaException, 
+            CampoNaoInformadoException, 
+            TamanhoCampoInvalidoException{
+        
+        validar(endereco);
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        enderecoDAO.insert(endereco);
+        
+    }
+    
+    public void update(Endereco endereco) throws SQLException, 
+            EntidadeNaoInformadaException, 
+            CampoNaoInformadoException, 
+            TamanhoCampoInvalidoException{
+        
+        validar(endereco);
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        enderecoDAO.update(endereco);
+    
+    }
+    
+    public void delete(int id) throws SQLException{
+        
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        enderecoDAO.delete(id);
+        
     }
     
 }

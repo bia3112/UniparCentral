@@ -37,7 +37,7 @@ public class AgenciaDAO {
             "CNPJ = ?, BANCO_ID = ? " +
             "WHERE ID = ?";
     
-    public List<Agencia> findall() throws SQLException{
+    public List<Agencia> findAll() throws SQLException{
         ArrayList<Agencia> retorno = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;

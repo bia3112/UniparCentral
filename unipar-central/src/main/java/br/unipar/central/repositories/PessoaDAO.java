@@ -20,15 +20,15 @@ import java.util.List;
 public class PessoaDAO {
     
     private static final String INSERT = "INSERT INTO PESSOA" 
-            + "(ID, RA, EMAIL, ENDERECO_ID, TELEFONE_ID) "
+            + "(ID, RA, EMAIL) "
             + "VALUES(?, ?, ?, ?, ?)";
     
     private static final String FIND_ALL =
-            "SELECT ID, RA, EMAIL, ENDERECO_ID, TELEFONE_ID " +
+            "SELECT ID, RA, EMAIL " +
             "FROM PESSOA";
     
     private static final String FIND_BY_ID =
-            "SELECT ID, RA, EMAIL, ENDERECO_ID, TELEFONE_ID " +
+            "SELECT ID, RA, EMAIL " +
             "FROM PESSOA " +
             "WHERE ID = ?";
     
@@ -36,11 +36,10 @@ public class PessoaDAO {
             "DELETE FROM PESSOA WHERE ID = ?";
     
     private static final String UPDATE = 
-            "UPDATE PESSOA SET RA = ?, EMAIL = ?, ENDERECO_ID = ?, " + 
-            " TELEFONE_ID = ? " +
+            "UPDATE PESSOA SET RA = ?, EMAIL = ? " + 
             "WHERE ID = ?";
     
-    public List<Pessoa> findall() throws SQLException{
+    public List<Pessoa> findAll() throws SQLException{
         ArrayList<Pessoa> retorno = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -57,12 +56,6 @@ public class PessoaDAO {
                 pessoa.setId(rs.getInt("ID"));
                 pessoa.setRegistroAcademico(rs.getString("RA"));
                 pessoa.setEmail(rs.getString("EMAIL"));
-                ArrayList<Endereco> enderecos = new ArrayList<>();
-                    enderecos.add(new EnderecoDAO().findById(rs.getInt("ENDERECO_ID")));
-                    pessoa.setEnderecos(enderecos);          
-                ArrayList<Telefone> telefones = new ArrayList<>();
-                    telefones.add(new TelefoneDAO().findById(rs.getInt("TELEFONE_ID")));
-                    pessoa.setTelefones(telefones);
                
                 retorno.add(pessoa);   
             }          
@@ -100,12 +93,6 @@ public class PessoaDAO {
                retorno.setId(rs.getInt("ID"));
                retorno.setRegistroAcademico(rs.getString("RA"));
                retorno.setEmail(rs.getString("EMAIL"));
-                ArrayList<Endereco> enderecos = new ArrayList<>();
-                    enderecos.add(new EnderecoDAO().findById(rs.getInt("ENDERECO_ID")));
-                    retorno.setEnderecos(enderecos);          
-                ArrayList<Telefone> telefones = new ArrayList<>();
-                    telefones.add(new TelefoneDAO().findById(rs.getInt("TELEFONE_ID")));
-                    retorno.setTelefones(telefones);
             }           
         } finally { 
             if (rs != null)
@@ -132,11 +119,7 @@ public class PessoaDAO {
             pstmt.setInt(1, pessoa.getId());
             pstmt.setString(2, pessoa.getRegistroAcademico());
             pstmt.setString(3, pessoa.getEmail());
-            Array enderecoIdsArray = conn.createArrayOf("INTEGER", pessoa.getEnderecos().stream().map(Endereco::getId).toArray());
-            pstmt.setArray(4, enderecoIdsArray);
-            Array telefoneIdsArray = conn.createArrayOf("INTEGER", pessoa.getTelefones().stream().map(Telefone::getId).toArray());
-            pstmt.setArray(5, telefoneIdsArray);
-
+            
             pstmt.executeUpdate();   
             
         } finally {
@@ -160,10 +143,6 @@ public class PessoaDAO {
             pstmt.setInt(1, pessoa.getId());
             pstmt.setString(2, pessoa.getRegistroAcademico());
             pstmt.setString(3, pessoa.getEmail());
-            Array enderecoIdsArray = conn.createArrayOf("INTEGER", pessoa.getEnderecos().stream().map(Endereco::getId).toArray());
-            pstmt.setArray(4, enderecoIdsArray);
-            Array telefoneIdsArray = conn.createArrayOf("INTEGER", pessoa.getTelefones().stream().map(Telefone::getId).toArray());
-            pstmt.setArray(5, telefoneIdsArray);
             
             pstmt.executeUpdate();
             

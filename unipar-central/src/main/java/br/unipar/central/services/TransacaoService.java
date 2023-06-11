@@ -27,10 +27,6 @@ public class TransacaoService {
             transacao.getTipo().isEmpty()){
             throw new CampoNaoInformadoException("Tipo");
         }
-        
-        if(transacao.getTipo().length() > 30){
-            throw new TamanhoCampoInvalidoException("Tipo",30);
-        }
  
         if(String.valueOf(transacao.getValor()) == null || 
                 String.valueOf(transacao.getValor()).isBlank() ||
@@ -63,7 +59,7 @@ public class TransacaoService {
         Transacao retorno = transacaoDAO.findById(id);
         
         if(retorno == null)
-            throw new Exception("Não foi possível encontrar um pais com o id " + id + " informado.");
+            throw new Exception("Não foi possível encontrar uma transacao com o id " + id + " informado.");
         
         return retorno;
         
@@ -74,7 +70,7 @@ public class TransacaoService {
             CampoNaoInformadoException, 
             TamanhoCampoInvalidoException{
         
-        validar(transacao);//validar todas as exceções
+        validar(transacao);
         TransacaoDAO transacaoDAO = new TransacaoDAO();
         transacaoDAO.insert(transacao);
         

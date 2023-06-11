@@ -38,7 +38,7 @@ public class CidadeDAO {
             " ESTADO_ID = ? " +
             "WHERE ID = ?";
     
-    public List<Cidade> findall() throws SQLException{
+    public List<Cidade> findAll() throws SQLException{
         
         ArrayList<Cidade> retorno = new ArrayList<>();
         Connection conn = null;

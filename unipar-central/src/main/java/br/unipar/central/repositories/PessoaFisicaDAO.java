@@ -18,15 +18,15 @@ public class PessoaFisicaDAO {
     
     private static final String INSERT =
             "INSERT INTO PESSOAFISICA " +
-            "(NOME, CPF, RG, DTNASCIMENTO, PESSOA_ID) " +
+            "(NOME, CPF, RG, DATANASCIMENTO, PESSOA_ID) " +
             "VALUES(?, ?, ?, ?, ?)";
     
     private static final String FIND_ALL =
-            "SELECT NOME, CPF, RG, DTNASCIMENTO, PESSOA_ID  " +
+            "SELECT NOME, CPF, RG, DATANASCIMENTO, PESSOA_ID  " +
             "FROM PESSOAFISICA ";
     
     private static final String FIND_BY_ID =
-            "SELECT NOME, CPF, RG, DTNASCIMENTO, PESSOA_ID  " +
+            "SELECT NOME, CPF, RG, DATANASCIMENTO, PESSOA_ID  " +
             "FROM PESSOAFISICA " +
             "WHERE ID = ?";
     
@@ -35,7 +35,7 @@ public class PessoaFisicaDAO {
     
     private static final String UPDATE = 
             "UPDATE PESSOAFISICA SET NOME = ?, CPF = ?, RG = ?, " + 
-            "DTNASCIMENTO = ?, PESSOA_ID = ? " +
+            "DATANASCIMENTO = ?, PESSOA_ID = ? " +
             "WHERE ID = ?";
     
     public List<PessoaFisica> findAll() throws SQLException {
@@ -60,7 +60,7 @@ public class PessoaFisicaDAO {
                 pessoaFisica.setNome(rs.getString("NOME"));
                 pessoaFisica.setCpf(rs.getString("CPF"));
                 pessoaFisica.setRg(rs.getString("RG"));
-                pessoaFisica.setDtNascimento(rs.getDate("DTNASCIMENTO"));
+                pessoaFisica.setDtNascimento(rs.getDate("DATANASCIMENTO"));
                 pessoaFisica.setId(rs.getInt("PESSOA_ID"));
                 
                 retorno.add(pessoaFisica);
@@ -103,7 +103,7 @@ public class PessoaFisicaDAO {
                 retorno.setNome(rs.getString("NOME"));
                 retorno.setCpf(rs.getString("CPF"));
                 retorno.setRg(rs.getString("RG"));
-                retorno.setDtNascimento(rs.getDate("DTNASCIMENTO"));
+                retorno.setDtNascimento(rs.getDate("DATANASCIMENTO"));
                 retorno.setId(rs.getInt("PESSOA_ID"));
             }
             

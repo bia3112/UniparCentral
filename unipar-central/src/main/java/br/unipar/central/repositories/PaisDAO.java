@@ -43,11 +43,11 @@ public class PaisDAO {
             
             pstmt = conn.prepareStatement(FIND_ALL);
             
-            rs = pstmt.executeQuery();//executa FIND_ALL, retorna o resultado
+            rs = pstmt.executeQuery();
             
-            while(rs.next()){//enquanto não acabar
-                Pais pais = new Pais();//para utilizar para setar no arraylist de retorno
-                pais.setId(rs.getInt("ID"));//getInt - pq id é inteiro
+            while(rs.next()){
+                Pais pais = new Pais();
+                pais.setId(rs.getInt("ID"));
                 pais.setNome(rs.getString("NOME"));
                 pais.setRegistroAcademico(rs.getString("RA"));
                 pais.setSigla(rs.getString("SIGLA"));

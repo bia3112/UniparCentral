@@ -37,7 +37,7 @@ public class EnderecoDAO {
             "BAIRRO = ? , CEP = ?, COMPLEMENTO = ?, PESSOA_ID = ?, CIDADE_ID = ? " +
             "WHERE ID = ?";
     
-    public List<Endereco> findall() throws SQLException{
+    public List<Endereco> findAll() throws SQLException{
         ArrayList<Endereco> retorno = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -54,10 +54,10 @@ public class EnderecoDAO {
                 endereco.setId(rs.getInt("ID"));
                 endereco.setRegistroAcademico(rs.getString("RA"));
                 endereco.setLogradouro(rs.getString("LOGRADOURO"));
-                endereco.setNumero(rs.getInt("NUMERO"));
+                endereco.setNumero(rs.getString("NUMERO"));
                 endereco.setBairro(rs.getString("BAIRRO"));
-                endereco.setCep(rs.getInt("CEP"));
-                endereco.setComplemento(rs.getString("COMPLEMENTO"));              
+                endereco.setCep(rs.getString("CEP"));
+                endereco.setComplemento(rs.getString("COMPLEMENTO"));    
                 endereco.setPessoa(new PessoaDAO().findById(rs.getInt("PESSOA_ID")));
                 endereco.setCidade(new CidadeDAO().findById(rs.getInt("CIDADE_ID")));
                
@@ -97,9 +97,9 @@ public class EnderecoDAO {
                retorno.setId(rs.getInt("ID"));
                retorno.setRegistroAcademico(rs.getString("RA"));
                retorno.setLogradouro(rs.getString("LOGRAOUDRO"));
-               retorno.setNumero(rs.getInt("NUMERO"));
+               retorno.setNumero(rs.getString("NUMERO"));
                retorno.setBairro(rs.getString("BAIRRO"));
-               retorno.setCep(rs.getInt("CEP"));
+               retorno.setCep(rs.getString("CEP"));
                retorno.setComplemento(rs.getString("COMPLEMENTO"));
                retorno.setPessoa(new PessoaDAO().findById(rs.getInt("PESSOA_ID")));
                retorno.setCidade(new CidadeDAO().findById(rs.getInt("CIDADE_ID")));
@@ -130,9 +130,9 @@ public class EnderecoDAO {
             pstmt.setInt(1, endereco.getId());
             pstmt.setString(2, endereco.getRegistroAcademico());
             pstmt.setString(3, endereco.getLogradouro());
-            pstmt.setInt(4, endereco.getNumero());
+            pstmt.setString(4, endereco.getNumero());
             pstmt.setString(5, endereco.getBairro());
-            pstmt.setInt(6, endereco.getCep());
+            pstmt.setString(6, endereco.getCep());
             pstmt.setString(7, endereco.getComplemento());
             pstmt.setInt(8, endereco.getPessoa().getId());
             pstmt.setInt(9, endereco.getCidade().getId());
@@ -160,9 +160,9 @@ public class EnderecoDAO {
             pstmt.setInt(1, endereco.getId());
             pstmt.setString(2, endereco.getRegistroAcademico());
             pstmt.setString(3, endereco.getLogradouro());
-            pstmt.setInt(4, endereco.getNumero());
+            pstmt.setString(4, endereco.getNumero());
             pstmt.setString(5, endereco.getBairro());
-            pstmt.setInt(6, endereco.getCep());
+            pstmt.setString(6, endereco.getCep());
             pstmt.setString(7, endereco.getComplemento());
             pstmt.setInt(8, endereco.getPessoa().getId());
             pstmt.setInt(9, endereco.getCidade().getId());

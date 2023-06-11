@@ -37,7 +37,7 @@ public class ContaDAO {
             "DIGITO = ?, SALDO = ?, AGENCIA_ID = ?, PESSOA_ID = ? " +
             "WHERE ID = ?";
     
-    public List<Conta> findall() throws SQLException{
+    public List<Conta> findAll() throws SQLException{
         ArrayList<Conta> retorno = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;

@@ -30,12 +30,12 @@ public class PaisService {
             throw new CampoNaoInformadoException("Sigla");
         }
         
-        if(!(pais.getSigla().length() == 2)){// ! - deixa obrigatório
-            throw new TamanhoCampoInvalidoException("Sigla", 2);
+        if(pais.getSigla().length() > 3){
+            throw new TamanhoCampoInvalidoException("Sigla", 3);
         }
         
-        if(!(pais.getNome().length() > 60)){
-            throw new TamanhoCampoInvalidoException("Nome", 60);
+        if(pais.getNome().length() > 120){
+            throw new TamanhoCampoInvalidoException("Nome", 120);
         }
         
     }
@@ -69,7 +69,7 @@ public class PaisService {
             CampoNaoInformadoException, 
             TamanhoCampoInvalidoException{
         
-        validar(pais);//validar todas as exceções
+        validar(pais);
         PaisDAO paisDAO = new PaisDAO();
         paisDAO.insert(pais);
         

@@ -18,15 +18,15 @@ public class TelefoneDAO {
     
     private static final String INSERT =
             "INSERT INTO TELEFONE " +
-            "(ID, RA, NUMERO, OPERADORA) " +
+            "(ID, RA, NUMERO, OPERADORA, AGENCIA_ID, PESSOA_ID) " +
             "VALUES(?, ?, ?, ?)";
     
     private static final String FIND_ALL =
-            "SELECT ID, RA, NUMERO, OPERADORA  " +
+            "SELECT ID, RA, NUMERO, OPERADORA, AGENCIA_ID, PESSOA_ID " +
             "FROM TELEFONE ";
     
     private static final String FIND_BY_ID =
-            "SELECT ID, RA, NUMERO, OPERADORA  " +
+            "SELECT ID, RA, NUMERO, OPERADORA, AGENCIA_ID, PESSOA_ID  " +
             "FROM TELEFONE " +
             "WHERE ID = ?";
     
@@ -35,10 +35,10 @@ public class TelefoneDAO {
     
     private static final String UPDATE = 
             "UPDATE TELEFONE SET RA = ?, " + 
-            " NUMERO = ?, OPERADORA = ? " +
+            " NUMERO = ?, OPERADORA = ? , AGENCIA_ID = ?, PESSOA_ID = ?" +
             "WHERE ID = ?";
     
-    public List<Telefone> findall() throws SQLException{
+    public List<Telefone> findAll() throws SQLException{
         
         ArrayList<Telefone> retorno = new ArrayList<>();
         Connection conn = null;
@@ -56,6 +56,8 @@ public class TelefoneDAO {
                 telefone.setRegistroAcademico(rs.getString("RA"));
                 telefone.setNumero(rs.getString("NUMERO"));
                 telefone.setOperadora(rs.getString("OPERADORA"));
+                telefone.setAgencia(new AgenciaDAO().findById(rs.getInt("AGENCIA_ID")));
+                telefone.setPessoa(new PessoaDAO().findById(rs.getInt("PESSOA_ID")));
 
                 retorno.add(telefone);
             }
@@ -94,6 +96,8 @@ public class TelefoneDAO {
                        rs.getString("RA"));
                retorno.setNumero(rs.getString("NUMERO"));
                retorno.setOperadora(rs.getString("OPERADORA"));
+               retorno.setAgencia(new AgenciaDAO().findById(rs.getInt("AGENCIA_ID")));
+               retorno.setPessoa(new PessoaDAO().findById(rs.getInt("PESSOA_ID")));
             }
         } finally {  
             if (rs != null)
@@ -119,7 +123,9 @@ public class TelefoneDAO {
             pstmt.setInt(1, telefone.getId());
             pstmt.setString(2, telefone.getRegistroAcademico());
             pstmt.setString(3, telefone.getNumero());
-            pstmt.setString(4, telefone.getOperadora());  
+            pstmt.setString(4, telefone.getOperadora());
+            pstmt.setInt(5, telefone.getAgencia().getId());
+            pstmt.setInt(6, telefone.getPessoa().getId());
             
             pstmt.executeUpdate();   
             
@@ -144,6 +150,8 @@ public class TelefoneDAO {
             pstmt.setString(2, telefone.getRegistroAcademico());
             pstmt.setString(3, telefone.getNumero());
             pstmt.setString(4, telefone.getOperadora());
+            pstmt.setInt(5, telefone.getAgencia().getId());
+            pstmt.setInt(6, telefone.getPessoa().getId());
 
             pstmt.executeUpdate();
             

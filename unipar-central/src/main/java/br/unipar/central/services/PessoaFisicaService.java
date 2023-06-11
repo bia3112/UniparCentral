@@ -5,7 +5,10 @@ import br.unipar.central.exceptions.CampoNaoInformadoException;
 import br.unipar.central.exceptions.EntidadeNaoInformadaException;
 import br.unipar.central.exceptions.TamanhoCampoInvalidoException;
 import br.unipar.central.models.PessoaFisica;
+import br.unipar.central.repositories.PessoaFisicaDAO;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  *
@@ -24,8 +27,8 @@ public class PessoaFisicaService {
             pessoaFisica.getNome().isEmpty()){
             throw new CampoNaoInformadoException("Nome");
         }       
-        if(pessoaFisica.getNome().length() > 80){
-            throw new TamanhoCampoInvalidoException("Nome",80);
+        if(pessoaFisica.getNome().length() > 120){
+            throw new TamanhoCampoInvalidoException("Nome",120);
         }
         
         if(pessoaFisica.getCpf() == null || 
@@ -33,8 +36,8 @@ public class PessoaFisicaService {
             pessoaFisica.getCpf().isEmpty()){
             throw new CampoNaoInformadoException("Cpf");
         }        
-        if(pessoaFisica.getCpf().length() > 11){
-            throw new TamanhoCampoInvalidoException("Cpf",11);
+        if(pessoaFisica.getCpf().length() > 20){
+            throw new TamanhoCampoInvalidoException("Cpf",20);
         }
         
         if(pessoaFisica.getRg() == null || 
@@ -42,8 +45,8 @@ public class PessoaFisicaService {
             pessoaFisica.getRg().isEmpty()){
             throw new CampoNaoInformadoException("Rg");
         }        
-        if(pessoaFisica.getRg().length() > 8){
-            throw new TamanhoCampoInvalidoException("Rg",8);
+        if(pessoaFisica.getRg().length() > 20){
+            throw new TamanhoCampoInvalidoException("Rg",20);
         }
         
         if(pessoaFisica.getDtNascimento() == null ||
@@ -51,6 +54,58 @@ public class PessoaFisicaService {
            new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(pessoaFisica.getDtNascimento()).isEmpty()){
             throw new CampoNaoInformadoException("DtNascimento");
         } 
+    }
+    
+    public List<PessoaFisica> findAll() throws SQLException{
+        
+        PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
+        List<PessoaFisica> resultado = pessoaFisicaDAO.findAll();
+        
+        return resultado;
+    }
+    
+    public PessoaFisica findById(int id) throws SQLException, TamanhoCampoInvalidoException, Exception{
+        
+        if(id <= 0)
+            throw new TamanhoCampoInvalidoException("id", 1);
+        
+        PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
+        
+        PessoaFisica retorno = pessoaFisicaDAO.findById(id);
+        
+        if(retorno == null)
+            throw new Exception("Não foi possível encontrar uma pessoaFisica com o id " + id + " informado.");
+        
+        return retorno;
+        
+    }
+    
+    public void insert(PessoaFisica pessoaFisica)throws SQLException, 
+            EntidadeNaoInformadaException, 
+            CampoNaoInformadoException, 
+            TamanhoCampoInvalidoException{
+        
+        validar(pessoaFisica);
+        PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
+        pessoaFisicaDAO.insert(pessoaFisica);
+        
+    }
+    
+    public void update(PessoaFisica pessoaFisica) throws SQLException, 
+            EntidadeNaoInformadaException, 
+            CampoNaoInformadoException, 
+            TamanhoCampoInvalidoException{
+        
+        validar(pessoaFisica);
+        PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
+        pessoaFisicaDAO.update(pessoaFisica);
+    
+    }
+    
+    public void delete(int id) throws SQLException{
+        
+        PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
+        pessoaFisicaDAO.delete(id);
         
     }
     
