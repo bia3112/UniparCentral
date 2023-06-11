@@ -2,7 +2,6 @@
 package br.unipar.central.repositories;
 
 import br.unipar.central.models.Transacao;
-import br.unipar.central.models.Conta;
 import br.unipar.central.utils.DataBaseUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,15 +18,15 @@ public class TransacaoDAO {
     
     private static final String INSERT =
             "INSERT INTO TRANSACAO " +
-            "(ID, DATAHORA, VALOR, TIPO, RA, CONTAORIGEM, CONTADESTINO) " +
+            "(ID, DATAHORA, VALOR, TIPO, RA, CONTA_ORIGEM, CONTA_DESTINO) " +
             "VALUES(?, ?, ?, ?, ?)";
     
     private static final String FIND_ALL =
-            "SELECT ID, DATAHORA, VALOR, TIPO, RA, CONTAORIGEM, CONTADESTINO  " +
+            "SELECT ID, DATAHORA, VALOR, TIPO, RA, CONTA_ORIGEM, CONTA_DESTINO  " +
             "FROM TRANSACAO ";
     
     private static final String FIND_BY_ID =
-            "SELECT ID, DATAHORA, VALOR, TIPO, RA, CONTAORIGEM, CONTADESTINO  " +
+            "SELECT ID, DATAHORA, VALOR, TIPO, RA, CONTA_ORIGEM, CONTA_DESTINO  " +
             "FROM TRANSACAO " +
             "WHERE ID = ?";
     
@@ -36,7 +35,7 @@ public class TransacaoDAO {
     
     private static final String UPDATE = 
             "UPDATE TRANSACAO SET ID = ?, DATAHORA = ?, VALOR = ?, " + 
-            "TIPO = ?, RA = ?, CONTAORIGEM = ?, CONTADESTINO = ? " +
+            "TIPO = ?, RA = ?, CONTA_ORIGEM = ?, CONTA_DESTINO = ? " +
             "WHERE ID = ?";
     
     public List<Transacao> findAll() throws SQLException {
@@ -61,8 +60,8 @@ public class TransacaoDAO {
                 transacao.setTipo(rs.getString("TIPO"));
                 transacao.setDataHora(rs.getTimestamp("DATAHORA"));
                 transacao.setValor(rs.getDouble("VALOR"));
-                transacao.setContaOrigem(new ContaDAO().findById(rs.getInt("CONTAORIGEM")));
-                transacao.setContaDestino(new ContaDAO().findById(rs.getInt("CONTADESTINO")));
+                transacao.setContaOrigem(new ContaDAO().findById(rs.getInt("CONTA_ORIGEM")));
+                transacao.setContaDestino(new ContaDAO().findById(rs.getInt("CONTA_DESTINO")));
                 
                 retorno.add(transacao);
                 
@@ -106,8 +105,8 @@ public class TransacaoDAO {
                retorno.setTipo(rs.getString("TIPO"));
                retorno.setDataHora(rs.getTimestamp("DATAHORA"));
                retorno.setValor(rs.getDouble("VALOR"));
-               retorno.setContaOrigem(new ContaDAO().findById(rs.getInt("CONTAORIGEM")));
-               retorno.setContaDestino(new ContaDAO().findById(rs.getInt("CONTADESTINO")));
+               retorno.setContaOrigem(new ContaDAO().findById(rs.getInt("CONTA_ORIGEM")));
+               retorno.setContaDestino(new ContaDAO().findById(rs.getInt("CONTA_DESTINO")));
                
             }
         } finally {
