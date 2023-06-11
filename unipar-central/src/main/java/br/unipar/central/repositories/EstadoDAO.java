@@ -60,12 +60,7 @@ public class EstadoDAO {
                 estado.setNome(rs.getString("NOME"));
                 estado.setRegistroAcademico(
                         rs.getString("RA"));
-                estado.setSigla(rs.getString("SIGLA"));
-                
-                //PaisDAO paisDAO = new PaisDAO();
-                //Pais pais = paisDAO.findById(rs.getInt("PAIS_ID"));
-                //estado.setPais(pais);
-                
+                estado.setSigla(rs.getString("SIGLA"));                
                 estado.setPais(new PaisDAO().findById(
                         rs.getInt("PAIS_ID")));
                 

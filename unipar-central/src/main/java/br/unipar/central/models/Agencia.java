@@ -1,8 +1,6 @@
 
 package br.unipar.central.models;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Beatr
@@ -12,16 +10,16 @@ public class Agencia extends AbstractBaseEntiny{
     private String codigo;
     private String razaoSocial;
     private String cnpj;
-    private ArrayList<Telefone> telefones = new ArrayList<>();
-    private ArrayList<Conta> contas = new ArrayList<>();
+    private Banco banco;
 
     public Agencia() {
     }
 
-    public Agencia(String codigo, String razaoSocial, String cnpj) {
+    public Agencia(String codigo, String razaoSocial, String cnpj, Banco banco) {
         this.codigo = codigo;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
+        this.banco = banco;
     }
     
     public String getCodigo() {
@@ -48,25 +46,17 @@ public class Agencia extends AbstractBaseEntiny{
         this.cnpj = cnpj;
     }
 
-    public ArrayList<Telefone> getTelefones() {
-        return telefones;
+    public Banco getBanco() {
+        return banco;
     }
 
-    public void setTelefones(ArrayList<Telefone> telefones) {
-        this.telefones = telefones;
-    }
-
-    public ArrayList<Conta> getContas() {
-        return contas;
-    }
-
-    public void setContas(ArrayList<Conta> contas) {
-        this.contas = contas;
+    public void setBanco(Banco banco) {
+        this.banco = banco;
     }
 
     @Override
     public String toString() {
-        return "Agencia{" + "codigo=" + codigo + ", razaoSocial=" + razaoSocial + ", cnpj=" + cnpj + ", telefones=" + telefones + ", contas=" + contas + '}';
+        return "Agencia{" + "codigo=" + codigo + ", razaoSocial=" + razaoSocial + ", cnpj=" + cnpj + ", banco=" + banco + '}';
     }
 
 }

@@ -17,15 +17,15 @@ import java.util.List;
 public class ContaDAO {
     
     private static final String INSERT = "INSERT INTO CONTA" 
-            + "(ID, RA, NUMERO, TIPO, DIGITO, SALDO, PESSOA_ID) "
+            + "(ID, RA, NUMERO, TIPO, DIGITO, SALDO, AGENCIA_ID, PESSOA_ID) "
             + "VALUES(?, ?, ?, ?, ?, ?, ?)";
     
     private static final String FIND_ALL =
-            "SELECT ID, RA, NUMERO, TIPO, DIGITO, SALDO, PESSOA_ID " +
+            "SELECT ID, RA, NUMERO, TIPO, DIGITO, SALDO, AGENCIA_ID, PESSOA_ID " +
             "FROM CONTA";
     
     private static final String FIND_BY_ID =
-            "SELECT ID, RA, NUMERO, TIPO, DIGITO, SALDO, PESSOA_ID " +
+            "SELECT ID, RA, NUMERO, TIPO, DIGITO, SALDO, AGENCIA_ID, PESSOA_ID " +
             "FROM CONTA " +
             "WHERE ID = ?";
     
@@ -34,7 +34,7 @@ public class ContaDAO {
     
     private static final String UPDATE = 
             "UPDATE CONTA SET RA = ?, NUMERO = ?, TIPO = ?, " + 
-            " DIGITO = ?, SALDO = ?, PESSOA_ID = ? " +
+            "DIGITO = ?, SALDO = ?, AGENCIA_ID = ?, PESSOA_ID = ? " +
             "WHERE ID = ?";
     
     public List<Conta> findall() throws SQLException{
@@ -57,7 +57,8 @@ public class ContaDAO {
                 conta.setTipo(rs.getString("TIPO"));
                 conta.setDigito(rs.getInt("DIGITO"));
                 conta.setSaldo(rs.getDouble("SALDO"));
-                conta.setInt(new PessoaDAO().findById(rs.getInt("PESSOA_ID")));
+                conta.setAgencia(new AgenciaDAO().findById(rs.getInt("AGENCIA_ID")));
+                conta.setPessoa(new PessoaDAO().findById(rs.getInt("PESSOA_ID")));
                 
                 retorno.add(conta);   
             }          
@@ -98,7 +99,8 @@ public class ContaDAO {
                retorno.setTipo(rs.getString("TIPO"));
                retorno.setDigito(rs.getInt("DIGITO"));
                retorno.setSaldo(rs.getDouble("SALDO"));
-               retorno.setInt(new PessoaDAO().findById(rs.getInt("PESSOA_ID")));
+               retorno.setAgencia(new AgenciaDAO().findById(rs.getInt("AGENCIA_ID")));
+               retorno.setPessoa(new PessoaDAO().findById(rs.getInt("PESSOA_ID")));
             }           
         } finally { 
             if (rs != null)
@@ -127,7 +129,8 @@ public class ContaDAO {
             pstmt.setString(3, conta.getNumero());
             pstmt.setString(4, conta.getTipo());
             pstmt.setDouble(5, conta.getSaldo());
-            pstmt.setInt(6, conta.getPessoa().getId());
+            pstmt.setInt(6, conta.getAgencia().getId());
+            pstmt.setInt(7, conta.getPessoa().getId());
 
             pstmt.executeUpdate();   
             
@@ -154,7 +157,8 @@ public class ContaDAO {
             pstmt.setString(3, conta.getNumero());
             pstmt.setString(4, conta.getTipo());
             pstmt.setDouble(5, conta.getSaldo());
-            pstmt.setInt(6, conta.getPessoa().getId());
+            pstmt.setInt(6, conta.getAgencia().getId());
+            pstmt.setInt(7, conta.getPessoa().getId());
             
             pstmt.executeUpdate();
             

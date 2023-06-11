@@ -1,7 +1,7 @@
 
 package br.unipar.central.repositories;
 
-import br.unipar.central.models.Agencia;
+import br.unipar.central.models.PessoaJuridica;
 import br.unipar.central.utils.DataBaseUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,53 +14,61 @@ import java.util.List;
  *
  * @author Beatr
  */
-public class AgenciaDAO {
+public class PessoaJuridicaDAO {
     
-    private static final String INSERT = "INSERT INTO AGENCIA" 
-            + "(ID, RA, CODIGO, RAZAOSOCIAL, CNPJ, BANCO_ID) "
-            + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT =
+            "INSERT INTO PESSOAJURIDICA " +
+            "(CNPJ, RAZAOSOCIAL, CNAEPRINCIPAL, FANTASIA, PESSOA_ID) " +
+            "VALUES(?, ?, ?, ?, ?)";
     
     private static final String FIND_ALL =
-            "SELECT ID, RA, CODIGO, RAZAOSOCIAL, CNPJ, BANCO_ID " +
-            "FROM AGENCIA";
+            "SELECT CNPJ, RAZAOSOCIAL, CNAEPRINCIPAL, FANTASIA, PESSOA_ID  " +
+            "FROM PESSOAJURIDICA ";
     
     private static final String FIND_BY_ID =
-            "SELECT ID, RA, CODIGO, RAZAOSOCIAL, CNPJ, BANCO_ID " +
-            "FROM AGENCIA " +
+            "SELECT CNPJ, RAZAOSOCIAL, CNAEPRINCIPAL, FANTASIA, PESSOA_ID  " +
+            "FROM PESSOAJURIDICA " +
             "WHERE ID = ?";
     
     private static final String DELETE_BY_ID = 
-            "DELETE FROM AGENCIA WHERE ID = ?";
+            "DELETE FROM PESSOAJURIDICA WHERE ID = ?";
     
     private static final String UPDATE = 
-            "UPDATE AGENCIA SET RA = ?, CODIGO = ?, RAZAOSOCIAL = ?, " + 
-            "CNPJ = ?, BANCO_ID = ? " +
+            "UPDATE PESSOAJURIDICA SET CNPJ = ?, RAZAOSOCIAL = ?, CNAEPRINCIPAL = ?, " + 
+            "FANTASIA = ?, PESSOA_ID = ? " +
             "WHERE ID = ?";
     
-    public List<Agencia> findall() throws SQLException{
-        ArrayList<Agencia> retorno = new ArrayList<>();
+    public List<PessoaJuridica> findAll() throws SQLException {
+        
+        ArrayList<PessoaJuridica> retorno = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         
-        try{          
+        try {
+            
             conn = new DataBaseUtils().getConnection();
+            
             pstmt = conn.prepareStatement(FIND_ALL);
+            
             rs = pstmt.executeQuery();
             
-            while(rs.next()){                
-                Agencia agencia = new Agencia();
+            while (rs.next()) {
                 
-                agencia.setId(rs.getInt("ID"));
-                agencia.setRegistroAcademico(rs.getString("RA"));
-                agencia.setCodigo(rs.getString("CODIGO"));
-                agencia.setRazaoSocial(rs.getString("RAZAOSOCIAL"));
-                agencia.setCnpj(rs.getString("CNPJ"));
-                agencia.setBanco(new BancoDAO().findById(rs.getInt("BANCO_ID")));
+                PessoaJuridica pessoaJuridica = new PessoaJuridica();
                 
-                retorno.add(agencia);   
-            }          
-        }finally{            
+                pessoaJuridica.setCnpj(rs.getString("CNPJ"));
+                pessoaJuridica.setRazaoSocial(rs.getString("RAZAOSOCIAL"));
+                pessoaJuridica.setCnaePrincipal(rs.getString("CNAEPRINCIPAL"));
+                pessoaJuridica.setFantasia(rs.getString("FANTASIA"));
+                pessoaJuridica.setId(rs.getInt("PESSOA_ID"));
+                
+                retorno.add(pessoaJuridica);
+                
+            }
+            
+        } finally {
+            
             if (rs != null)
                 rs.close();
             
@@ -68,17 +76,19 @@ public class AgenciaDAO {
                 pstmt.close();
             
             if (conn != null) 
-                conn.close();       
-        }   
+                conn.close();
+        }
+        
         return retorno;
+        
     }
     
-    public Agencia findById(int id) throws SQLException {
+    public PessoaJuridica findById(int id) throws SQLException {
         
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        Agencia retorno = null;
+        PessoaJuridica retorno = null;
         
         try {
             
@@ -89,16 +99,16 @@ public class AgenciaDAO {
             rs = pstmt.executeQuery();
             
             while (rs.next()) {
-               retorno = new Agencia(); 
-               
-               retorno.setId(rs.getInt("ID"));
-               retorno.setRegistroAcademico(rs.getString("RA"));
-               retorno.setCodigo(rs.getString("CODIGO"));
-               retorno.setRazaoSocial(rs.getString("RAZAOSOCIAL"));
-               retorno.setCnpj(rs.getString("CNPJ"));
-               retorno.setBanco(new BancoDAO().findById(rs.getInt("BANCO_ID")));
-            }           
-        } finally { 
+                retorno = new PessoaJuridica();
+                retorno.setCnpj(rs.getString("CNPJ"));
+                retorno.setRazaoSocial(rs.getString("RAZAOSOCIAL"));
+                retorno.setCnaePrincipal(rs.getString("CNAEPRINCIPAL"));
+                retorno.setFantasia(rs.getString("FANTASIA"));
+                retorno.setId(rs.getInt("PESSOA_ID"));
+            }
+            
+        } finally {
+            
             if (rs != null)
                 rs.close();
             
@@ -106,12 +116,15 @@ public class AgenciaDAO {
                 pstmt.close();
             
             if (conn != null)
-                conn.close();  
+                conn.close();
+            
         }
+        
         return retorno;
+        
     }
     
-    public void insert(Agencia agencia) throws SQLException {
+    public void insert(PessoaJuridica pessoaJuridica) throws SQLException {
         
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -120,13 +133,13 @@ public class AgenciaDAO {
             
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(INSERT);
-            pstmt.setInt(1, agencia.getId());
-            pstmt.setString(2, agencia.getRegistroAcademico());
-            pstmt.setString(3, agencia.getCodigo());
-            pstmt.setString(4, agencia.getRazaoSocial());
-            pstmt.setString(5, agencia.getCnpj());
-            pstmt.setInt(6, agencia.getBanco().getId());
-
+            pstmt.setString(1, pessoaJuridica.getCnpj());
+            pstmt.setString(2, pessoaJuridica.getRazaoSocial());
+            pstmt.setString(3, pessoaJuridica.getCnaePrincipal());
+            pstmt.setString(4, pessoaJuridica.getFantasia());
+            pstmt.setInt(5, pessoaJuridica.getId());
+            
+            
             pstmt.executeUpdate();   
             
         } finally {
@@ -136,9 +149,10 @@ public class AgenciaDAO {
             if (conn != null)
                 conn.close();
         }
-    }
         
-        public void update(Agencia agencia) throws SQLException {
+    }
+    
+    public void update(PessoaJuridica pessoaJuridica) throws SQLException {
         
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -147,12 +161,11 @@ public class AgenciaDAO {
             
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(UPDATE);
-            pstmt.setInt(1, agencia.getId());
-            pstmt.setString(2, agencia.getRegistroAcademico());
-            pstmt.setString(3, agencia.getCodigo());
-            pstmt.setString(4, agencia.getRazaoSocial());
-            pstmt.setString(5, agencia.getCnpj());
-            pstmt.setInt(6, agencia.getBanco().getId());
+            pstmt.setString(1, pessoaJuridica.getCnpj());
+            pstmt.setString(2, pessoaJuridica.getRazaoSocial());
+            pstmt.setString(3, pessoaJuridica.getCnaePrincipal());
+            pstmt.setString(4, pessoaJuridica.getFantasia());
+            pstmt.setInt(5, pessoaJuridica.getId());
             
             pstmt.executeUpdate();
             
@@ -166,6 +179,7 @@ public class AgenciaDAO {
         }
         
     }
+    
     
     public void delete(int id) throws SQLException {
         
@@ -185,6 +199,8 @@ public class AgenciaDAO {
                 pstmt.close();
             if (conn != null)
                 conn.close();
-        }     
-    }   
+        }
+        
+    }
+    
 }

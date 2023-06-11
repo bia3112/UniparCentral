@@ -1,7 +1,7 @@
 
 package br.unipar.central.repositories;
 
-import br.unipar.central.models.Agencia;
+import br.unipar.central.models.PessoaFisica;
 import br.unipar.central.utils.DataBaseUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,53 +14,61 @@ import java.util.List;
  *
  * @author Beatr
  */
-public class AgenciaDAO {
+public class PessoaFisicaDAO {
     
-    private static final String INSERT = "INSERT INTO AGENCIA" 
-            + "(ID, RA, CODIGO, RAZAOSOCIAL, CNPJ, BANCO_ID) "
-            + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT =
+            "INSERT INTO PESSOAFISICA " +
+            "(NOME, CPF, RG, DTNASCIMENTO, PESSOA_ID) " +
+            "VALUES(?, ?, ?, ?, ?)";
     
     private static final String FIND_ALL =
-            "SELECT ID, RA, CODIGO, RAZAOSOCIAL, CNPJ, BANCO_ID " +
-            "FROM AGENCIA";
+            "SELECT NOME, CPF, RG, DTNASCIMENTO, PESSOA_ID  " +
+            "FROM PESSOAFISICA ";
     
     private static final String FIND_BY_ID =
-            "SELECT ID, RA, CODIGO, RAZAOSOCIAL, CNPJ, BANCO_ID " +
-            "FROM AGENCIA " +
+            "SELECT NOME, CPF, RG, DTNASCIMENTO, PESSOA_ID  " +
+            "FROM PESSOAFISICA " +
             "WHERE ID = ?";
     
     private static final String DELETE_BY_ID = 
-            "DELETE FROM AGENCIA WHERE ID = ?";
+            "DELETE FROM PESSOAFISICA WHERE ID = ?";
     
     private static final String UPDATE = 
-            "UPDATE AGENCIA SET RA = ?, CODIGO = ?, RAZAOSOCIAL = ?, " + 
-            "CNPJ = ?, BANCO_ID = ? " +
+            "UPDATE PESSOAFISICA SET NOME = ?, CPF = ?, RG = ?, " + 
+            "DTNASCIMENTO = ?, PESSOA_ID = ? " +
             "WHERE ID = ?";
     
-    public List<Agencia> findall() throws SQLException{
-        ArrayList<Agencia> retorno = new ArrayList<>();
+    public List<PessoaFisica> findAll() throws SQLException {
+        
+        ArrayList<PessoaFisica> retorno = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         
-        try{          
+        try {
+            
             conn = new DataBaseUtils().getConnection();
+            
             pstmt = conn.prepareStatement(FIND_ALL);
+            
             rs = pstmt.executeQuery();
             
-            while(rs.next()){                
-                Agencia agencia = new Agencia();
+            while (rs.next()) {
                 
-                agencia.setId(rs.getInt("ID"));
-                agencia.setRegistroAcademico(rs.getString("RA"));
-                agencia.setCodigo(rs.getString("CODIGO"));
-                agencia.setRazaoSocial(rs.getString("RAZAOSOCIAL"));
-                agencia.setCnpj(rs.getString("CNPJ"));
-                agencia.setBanco(new BancoDAO().findById(rs.getInt("BANCO_ID")));
+                PessoaFisica pessoaFisica = new PessoaFisica();
                 
-                retorno.add(agencia);   
-            }          
-        }finally{            
+                pessoaFisica.setNome(rs.getString("NOME"));
+                pessoaFisica.setCpf(rs.getString("CPF"));
+                pessoaFisica.setRg(rs.getString("RG"));
+                pessoaFisica.setDtNascimento(rs.getDate("DTNASCIMENTO"));
+                pessoaFisica.setId(rs.getInt("PESSOA_ID"));
+                
+                retorno.add(pessoaFisica);
+                
+            }
+            
+        } finally {
+            
             if (rs != null)
                 rs.close();
             
@@ -68,17 +76,19 @@ public class AgenciaDAO {
                 pstmt.close();
             
             if (conn != null) 
-                conn.close();       
-        }   
+                conn.close();
+        }
+        
         return retorno;
+        
     }
     
-    public Agencia findById(int id) throws SQLException {
+    public PessoaFisica findById(int id) throws SQLException {
         
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        Agencia retorno = null;
+        PessoaFisica retorno = null;
         
         try {
             
@@ -89,16 +99,16 @@ public class AgenciaDAO {
             rs = pstmt.executeQuery();
             
             while (rs.next()) {
-               retorno = new Agencia(); 
-               
-               retorno.setId(rs.getInt("ID"));
-               retorno.setRegistroAcademico(rs.getString("RA"));
-               retorno.setCodigo(rs.getString("CODIGO"));
-               retorno.setRazaoSocial(rs.getString("RAZAOSOCIAL"));
-               retorno.setCnpj(rs.getString("CNPJ"));
-               retorno.setBanco(new BancoDAO().findById(rs.getInt("BANCO_ID")));
-            }           
-        } finally { 
+                retorno = new PessoaFisica();
+                retorno.setNome(rs.getString("NOME"));
+                retorno.setCpf(rs.getString("CPF"));
+                retorno.setRg(rs.getString("RG"));
+                retorno.setDtNascimento(rs.getDate("DTNASCIMENTO"));
+                retorno.setId(rs.getInt("PESSOA_ID"));
+            }
+            
+        } finally {
+            
             if (rs != null)
                 rs.close();
             
@@ -106,12 +116,15 @@ public class AgenciaDAO {
                 pstmt.close();
             
             if (conn != null)
-                conn.close();  
+                conn.close();
+            
         }
+        
         return retorno;
+        
     }
     
-    public void insert(Agencia agencia) throws SQLException {
+    public void insert(PessoaFisica pessoaFisica) throws SQLException {
         
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -120,13 +133,13 @@ public class AgenciaDAO {
             
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(INSERT);
-            pstmt.setInt(1, agencia.getId());
-            pstmt.setString(2, agencia.getRegistroAcademico());
-            pstmt.setString(3, agencia.getCodigo());
-            pstmt.setString(4, agencia.getRazaoSocial());
-            pstmt.setString(5, agencia.getCnpj());
-            pstmt.setInt(6, agencia.getBanco().getId());
-
+            pstmt.setString(1, pessoaFisica.getNome());
+            pstmt.setString(2, pessoaFisica.getCpf());
+            pstmt.setString(3, pessoaFisica.getRg());
+            pstmt.setDate(4, pessoaFisica.getDtNascimento());
+            pstmt.setInt(5, pessoaFisica.getId());
+            
+            
             pstmt.executeUpdate();   
             
         } finally {
@@ -136,9 +149,10 @@ public class AgenciaDAO {
             if (conn != null)
                 conn.close();
         }
-    }
         
-        public void update(Agencia agencia) throws SQLException {
+    }
+    
+    public void update(PessoaFisica pessoaFisica) throws SQLException {
         
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -147,12 +161,11 @@ public class AgenciaDAO {
             
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(UPDATE);
-            pstmt.setInt(1, agencia.getId());
-            pstmt.setString(2, agencia.getRegistroAcademico());
-            pstmt.setString(3, agencia.getCodigo());
-            pstmt.setString(4, agencia.getRazaoSocial());
-            pstmt.setString(5, agencia.getCnpj());
-            pstmt.setInt(6, agencia.getBanco().getId());
+            pstmt.setString(1, pessoaFisica.getNome());
+            pstmt.setString(2, pessoaFisica.getCpf());
+            pstmt.setString(3, pessoaFisica.getRg());
+            pstmt.setDate(4, pessoaFisica.getDtNascimento());
+            pstmt.setInt(5, pessoaFisica.getId());
             
             pstmt.executeUpdate();
             
@@ -166,6 +179,7 @@ public class AgenciaDAO {
         }
         
     }
+    
     
     public void delete(int id) throws SQLException {
         
@@ -185,6 +199,8 @@ public class AgenciaDAO {
                 pstmt.close();
             if (conn != null)
                 conn.close();
-        }     
-    }   
+        }
+        
+    }
+    
 }

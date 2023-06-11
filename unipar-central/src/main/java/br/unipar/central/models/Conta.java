@@ -12,16 +12,18 @@ public class Conta extends AbstractBaseEntiny{
     private int digito;
     private double saldo;
     private Pessoa pessoa;
+    private Agencia agencia;
 
     public Conta() {
     }
 
-    public Conta(String numero, String tipo, int digito, double saldo, Pessoa pessoa) {
+    public Conta(String numero, String tipo, int digito, double saldo, Pessoa pessoa, Agencia agencia) {
         this.numero = numero;
         this.tipo = tipo;
         this.digito = digito;
         this.saldo = saldo;
         this.pessoa = pessoa;
+        this.agencia = agencia;
     }
 
     public String getNumero() {
@@ -64,9 +66,17 @@ public class Conta extends AbstractBaseEntiny{
         this.pessoa = pessoa;
     }
 
+    public Agencia getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(Agencia agencia) {
+        this.agencia = agencia;
+    }
+
     @Override
     public String toString() {
-        return "Conta{" + "numero=" + numero + ", tipo=" + tipo + ", digito=" + digito + ", saldo=" + saldo + ", pessoa=" + pessoa + '}';
-    }
+        return "Conta{" + "numero=" + numero + ", tipo=" + tipo + ", digito=" + digito + ", saldo=" + saldo + ", pessoa=" + pessoa + ", agencia=" + agencia + '}';
+    }  
 
 }

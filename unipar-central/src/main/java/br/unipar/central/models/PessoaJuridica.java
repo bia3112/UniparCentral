@@ -1,11 +1,13 @@
 
 package br.unipar.central.models;
 
+import br.unipar.central.enums.TipoPessoaEnum;
+
 /**
  *
  * @author Beatr
  */
-public class PessoaJuridica extends AbstractBaseEntiny{
+public class PessoaJuridica extends Pessoa{
     
     private String cnpj;
     private String razaoSocial;
@@ -15,7 +17,8 @@ public class PessoaJuridica extends AbstractBaseEntiny{
     public PessoaJuridica() {
     }
 
-    public PessoaJuridica(String cnpj, String razaoSocial, String cnaePrincipal, String fantasia) {
+    public PessoaJuridica(String cnpj, String razaoSocial, String cnaePrincipal, String fantasia, String email, TipoPessoaEnum tipoPessoa) {
+        super(email, tipoPessoa);
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
         this.cnaePrincipal = cnaePrincipal;
