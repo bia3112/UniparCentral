@@ -1,8 +1,6 @@
 
 package br.unipar.central.models;
 
-import br.unipar.central.enums.TipoPessoaEnum;
-
 /**
  *
  * @author Beatr
@@ -17,8 +15,7 @@ public class PessoaJuridica extends Pessoa{
     public PessoaJuridica() {
     }
 
-    public PessoaJuridica(String cnpj, String razaoSocial, String cnaePrincipal, String fantasia, String email, TipoPessoaEnum tipoPessoa) {
-        super(email, tipoPessoa);
+    public PessoaJuridica(String cnpj, String razaoSocial, String cnaePrincipal, String fantasia, String email) {
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
         this.cnaePrincipal = cnaePrincipal;

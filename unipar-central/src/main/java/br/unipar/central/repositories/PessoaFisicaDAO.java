@@ -128,19 +128,24 @@ public class PessoaFisicaDAO {
         
         Connection conn = null;
         PreparedStatement pstmt = null;
+        ResultSet rs = null;
         
         try {
             
             conn = new DataBaseUtils().getConnection();
-            pstmt = conn.prepareStatement(INSERT);
+            pstmt = conn.prepareStatement(INSERT, new String[]{"id"});
             pstmt.setString(1, pessoaFisica.getNome());
             pstmt.setString(2, pessoaFisica.getCpf());
             pstmt.setString(3, pessoaFisica.getRg());
             pstmt.setDate(4, pessoaFisica.getDtNascimento());
-            pstmt.setInt(5, pessoaFisica.getId());
-            
+            pstmt.setInt(5, pessoaFisica.getId());     
             
             pstmt.executeUpdate();   
+            rs = pstmt.getGeneratedKeys();
+            if(rs.next()){
+                int idGerado = rs.getInt(1);
+                pessoaFisica.setId(idGerado);
+            }
             
         } finally {
             if (pstmt != null)

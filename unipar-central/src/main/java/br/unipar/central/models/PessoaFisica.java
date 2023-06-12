@@ -1,14 +1,13 @@
 
 package br.unipar.central.models;
 
-import br.unipar.central.enums.TipoPessoaEnum;
 import java.sql.Date;
 
 /**
  *
  * @author Beatr
  */
-public class PessoaFisica extends Pessoa{
+public class PessoaFisica{
     
     private String nome;
     private String cpf;
@@ -18,8 +17,7 @@ public class PessoaFisica extends Pessoa{
     public PessoaFisica() {
     }
 
-    public PessoaFisica(String nome, String cpf, String rg, Date dtNascimento, String email, TipoPessoaEnum tipoPessoa) {
-        super(email, tipoPessoa);
+    public PessoaFisica(String nome, String cpf, String rg, Date dtNascimento, String email) {
         this.nome = nome;
         this.cpf = cpf;
         this.rg = rg;
