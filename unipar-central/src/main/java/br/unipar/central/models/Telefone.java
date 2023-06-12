@@ -1,6 +1,8 @@
 
 package br.unipar.central.models;
 
+import br.unipar.central.enums.TipoOperadoraEnum;
+
 /**
  *
  * @author Beatr
@@ -8,26 +10,18 @@ package br.unipar.central.models;
 public class Telefone extends AbstractBaseEntiny{
     
     private String numero;
-    private String operadora;
+    private TipoOperadoraEnum operadora;
     private Agencia agencia;
     private Pessoa pessoa;
 
     public Telefone() {
     }
 
-    public Telefone(String numero, String operadora, Agencia agencia, Pessoa pessoa) {
+    public Telefone(String numero, TipoOperadoraEnum operadora, Agencia agencia, Pessoa pessoa) {
         this.numero = numero;
         this.operadora = operadora;
         this.agencia = agencia;
         this.pessoa = pessoa;
-    }
-
-    public String getOperadora() {
-        return operadora;
-    }
-
-    public void setOperadora(String operadora) {
-        this.operadora = operadora;
     }
 
     public String getNumero() {
@@ -36,6 +30,14 @@ public class Telefone extends AbstractBaseEntiny{
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public TipoOperadoraEnum getOperadora() {
+        return operadora;
+    }
+
+    public void setOperadora(TipoOperadoraEnum operadora) {
+        this.operadora = operadora;
     }
 
     public Agencia getAgencia() {
@@ -58,5 +60,7 @@ public class Telefone extends AbstractBaseEntiny{
     public String toString() {
         return "Telefone{" + "numero=" + numero + ", operadora=" + operadora + ", agencia=" + agencia + ", pessoa=" + pessoa + '}';
     }
+
+    
 
 }

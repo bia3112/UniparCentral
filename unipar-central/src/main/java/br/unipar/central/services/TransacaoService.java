@@ -9,7 +9,6 @@ import br.unipar.central.repositories.TransacaoDAO;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
 /**
  *
  * @author Beatr
@@ -23,8 +22,8 @@ public class TransacaoService {
         }
             
         if(transacao.getTipo() == null || 
-            transacao.getTipo().isBlank() ||
-            transacao.getTipo().isEmpty()){
+            String.valueOf(transacao.getTipo()).isBlank() ||
+            String.valueOf(transacao.getTipo()).isEmpty()){
             throw new CampoNaoInformadoException("Tipo");
         }
  

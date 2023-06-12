@@ -1,6 +1,7 @@
 
 package br.unipar.central.repositories;
 
+import br.unipar.central.enums.TipoOperadoraEnum;
 import br.unipar.central.models.Telefone;
 import br.unipar.central.utils.DataBaseUtils;
 import java.sql.Connection;
@@ -55,7 +56,7 @@ public class TelefoneDAO {
                 telefone.setId(rs.getInt("ID"));
                 telefone.setRegistroAcademico(rs.getString("RA"));
                 telefone.setNumero(rs.getString("NUMERO"));
-                telefone.setOperadora(rs.getString("OPERADORA"));
+                telefone.setOperadora(TipoOperadoraEnum.valueOf(rs.getString("OPERADORA")));
                 telefone.setAgencia(new AgenciaDAO().findById(rs.getInt("AGENCIA_ID")));
                 telefone.setPessoa(new PessoaDAO().findById(rs.getInt("PESSOA_ID")));
 
@@ -95,7 +96,7 @@ public class TelefoneDAO {
                retorno.setRegistroAcademico(
                        rs.getString("RA"));
                retorno.setNumero(rs.getString("NUMERO"));
-               retorno.setOperadora(rs.getString("OPERADORA"));
+               retorno.setOperadora(TipoOperadoraEnum.valueOf(rs.getString("OPERADORA")));
                retorno.setAgencia(new AgenciaDAO().findById(rs.getInt("AGENCIA_ID")));
                retorno.setPessoa(new PessoaDAO().findById(rs.getInt("PESSOA_ID")));
             }
@@ -123,7 +124,7 @@ public class TelefoneDAO {
             pstmt.setInt(1, telefone.getId());
             pstmt.setString(2, telefone.getRegistroAcademico());
             pstmt.setString(3, telefone.getNumero());
-            pstmt.setString(4, telefone.getOperadora());
+            pstmt.setString(4, telefone.getOperadora().name());
             pstmt.setInt(5, telefone.getAgencia().getId());
             pstmt.setInt(6, telefone.getPessoa().getId());
             
@@ -149,7 +150,7 @@ public class TelefoneDAO {
             pstmt.setInt(1, telefone.getId());
             pstmt.setString(2, telefone.getRegistroAcademico());
             pstmt.setString(3, telefone.getNumero());
-            pstmt.setString(4, telefone.getOperadora());
+            pstmt.setString(4, telefone.getOperadora().name());
             pstmt.setInt(5, telefone.getAgencia().getId());
             pstmt.setInt(6, telefone.getPessoa().getId());
 

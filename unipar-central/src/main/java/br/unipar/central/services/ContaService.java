@@ -30,13 +30,10 @@ public class ContaService {
             throw new TamanhoCampoInvalidoException("Numero",10);
         }
         
-        if(conta.getTipo() == null || 
-            conta.getTipo().isBlank() ||
-            conta.getTipo().isEmpty()){
-            throw new CampoNaoInformadoException("Tipo");
-        } 
-        if(conta.getTipo().length() > 20){
-            throw new TamanhoCampoInvalidoException("Tipo",20);
+        if(conta.getTipo() == null ||
+                String.valueOf(conta.getTipo()).isBlank() ||
+                String.valueOf(conta.getTipo()).isEmpty()){
+        throw new CampoNaoInformadoException("Tipo");
         }
         
         if(String.valueOf(conta.getDigito()) == null ||

@@ -31,13 +31,10 @@ public class TelefoneService {
         }
         
         if(telefone.getOperadora() == null || 
-            telefone.getOperadora().isBlank() ||
-            telefone.getOperadora().isEmpty()){
+            String.valueOf(telefone.getOperadora()).isBlank() ||
+            String.valueOf(telefone.getOperadora()).isEmpty()){
             throw new CampoNaoInformadoException("Operadora");
         }
-        if(telefone.getOperadora().length() > 50){
-            throw new TamanhoCampoInvalidoException("Operadora",50);
-        } 
     }
     
     public List<Telefone> findAll() throws SQLException{

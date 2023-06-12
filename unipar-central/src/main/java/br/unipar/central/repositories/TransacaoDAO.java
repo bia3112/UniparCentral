@@ -1,6 +1,7 @@
 
 package br.unipar.central.repositories;
 
+import br.unipar.central.enums.TipoTransacaoEnum;
 import br.unipar.central.models.Transacao;
 import br.unipar.central.utils.DataBaseUtils;
 import java.sql.Connection;
@@ -57,7 +58,7 @@ public class TransacaoDAO {
                 
                 Transacao transacao = new Transacao();
                 transacao.setId(rs.getInt("ID"));
-                transacao.setTipo(rs.getString("TIPO"));
+                transacao.setTipo(TipoTransacaoEnum.valueOf(rs.getString("TIPO")));
                 transacao.setDataHora(rs.getTimestamp("DATAHORA"));
                 transacao.setValor(rs.getDouble("VALOR"));
                 transacao.setContaOrigem(new ContaDAO().findById(rs.getInt("CONTA_ORIGEM")));
@@ -102,7 +103,7 @@ public class TransacaoDAO {
                retorno = new Transacao();
               
                retorno.setId(rs.getInt("ID"));
-               retorno.setTipo(rs.getString("TIPO"));
+               retorno.setTipo(TipoTransacaoEnum.valueOf(rs.getString("TIPO")));
                retorno.setDataHora(rs.getTimestamp("DATAHORA"));
                retorno.setValor(rs.getDouble("VALOR"));
                retorno.setContaOrigem(new ContaDAO().findById(rs.getInt("CONTA_ORIGEM")));
@@ -136,7 +137,7 @@ public class TransacaoDAO {
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(INSERT);
             pstmt.setInt(1, transacao.getId());
-            pstmt.setString(2, transacao.getTipo());
+            pstmt.setString(2, transacao.getTipo().name());
             pstmt.setTimestamp(3, transacao.getDataHora());
             pstmt.setDouble(4, transacao.getValor());
             pstmt.setInt(5, transacao.getContaOrigem().getId());
@@ -164,7 +165,7 @@ public class TransacaoDAO {
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(UPDATE);
             pstmt.setInt(1, transacao.getId());
-            pstmt.setString(2, transacao.getTipo());
+            pstmt.setString(2, transacao.getTipo().name());
             pstmt.setTimestamp(3, transacao.getDataHora());
             pstmt.setDouble(4, transacao.getValor());
             pstmt.setInt(5, transacao.getContaOrigem().getId());

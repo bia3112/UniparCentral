@@ -1,6 +1,7 @@
 
 package br.unipar.central.repositories;
 
+import br.unipar.central.enums.TipoContaEnum;
 import br.unipar.central.models.Conta;
 import br.unipar.central.utils.DataBaseUtils;
 import java.sql.Connection;
@@ -54,7 +55,7 @@ public class ContaDAO {
                 conta.setId(rs.getInt("ID"));
                 conta.setRegistroAcademico(rs.getString("RA"));
                 conta.setNumero(rs.getString("NUMERO"));
-                conta.setTipo(rs.getString("TIPO"));
+                conta.setTipo(TipoContaEnum.valueOf(rs.getString("TIPO")));
                 conta.setDigito(rs.getInt("DIGITO"));
                 conta.setSaldo(rs.getDouble("SALDO"));
                 conta.setAgencia(new AgenciaDAO().findById(rs.getInt("AGENCIA_ID")));
@@ -96,7 +97,7 @@ public class ContaDAO {
                retorno.setId(rs.getInt("ID"));
                retorno.setRegistroAcademico(rs.getString("RA"));
                retorno.setNumero(rs.getString("NUMERO"));
-               retorno.setTipo(rs.getString("TIPO"));
+               retorno.setTipo(TipoContaEnum.valueOf(rs.getString("TIPO")));
                retorno.setDigito(rs.getInt("DIGITO"));
                retorno.setSaldo(rs.getDouble("SALDO"));
                retorno.setAgencia(new AgenciaDAO().findById(rs.getInt("AGENCIA_ID")));
@@ -127,7 +128,7 @@ public class ContaDAO {
             pstmt.setInt(1, conta.getId());
             pstmt.setString(2, conta.getRegistroAcademico());
             pstmt.setString(3, conta.getNumero());
-            pstmt.setString(4, conta.getTipo());
+            pstmt.setString(4, conta.getTipo().name());
             pstmt.setDouble(5, conta.getSaldo());
             pstmt.setInt(6, conta.getAgencia().getId());
             pstmt.setInt(7, conta.getPessoa().getId());
@@ -155,7 +156,7 @@ public class ContaDAO {
             pstmt.setInt(1, conta.getId());
             pstmt.setString(2, conta.getRegistroAcademico());
             pstmt.setString(3, conta.getNumero());
-            pstmt.setString(4, conta.getTipo());
+            pstmt.setString(4, conta.getTipo().name());
             pstmt.setDouble(5, conta.getSaldo());
             pstmt.setInt(6, conta.getAgencia().getId());
             pstmt.setInt(7, conta.getPessoa().getId());

@@ -1,6 +1,8 @@
 
 package br.unipar.central.models;
 
+import br.unipar.central.enums.TipoContaEnum;
+
 /**
  *
  * @author Beatr
@@ -8,7 +10,7 @@ package br.unipar.central.models;
 public class Conta extends AbstractBaseEntiny{
     
     private String numero;
-    private String tipo;
+    private TipoContaEnum tipo;
     private int digito;
     private double saldo;
     private Pessoa pessoa;
@@ -17,7 +19,7 @@ public class Conta extends AbstractBaseEntiny{
     public Conta() {
     }
 
-    public Conta(String numero, String tipo, int digito, double saldo, Pessoa pessoa, Agencia agencia) {
+    public Conta(String numero, TipoContaEnum tipo, int digito, double saldo, Pessoa pessoa, Agencia agencia) {
         this.numero = numero;
         this.tipo = tipo;
         this.digito = digito;
@@ -34,13 +36,13 @@ public class Conta extends AbstractBaseEntiny{
         this.numero = numero;
     }
 
-    public String getTipo() {
+    public TipoContaEnum getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoContaEnum tipo) {
         this.tipo = tipo;
-    }
+    } 
 
     public int getDigito() {
         return digito;
@@ -77,6 +79,6 @@ public class Conta extends AbstractBaseEntiny{
     @Override
     public String toString() {
         return "Conta{" + "numero=" + numero + ", tipo=" + tipo + ", digito=" + digito + ", saldo=" + saldo + ", pessoa=" + pessoa + ", agencia=" + agencia + '}';
-    }  
+    }
 
 }
