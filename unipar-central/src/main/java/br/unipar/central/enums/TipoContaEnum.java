@@ -7,6 +7,18 @@ package br.unipar.central.enums;
  */
 public enum TipoContaEnum {
     
-    CONTACORRENTE, CONTAPOUPANCA;
+    CORRENTE(1), 
+    POUPANCA(2),
+    SALARIO(3);
+    
+    private final int numero;
+    
+    private TipoContaEnum(int numero){
+        this.numero = numero;
+    }
+
+    public int getNumero() {
+        return numero;
+    } 
     
 }

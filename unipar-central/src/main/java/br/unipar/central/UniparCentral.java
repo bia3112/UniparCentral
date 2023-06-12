@@ -1,6 +1,7 @@
 
 package br.unipar.central;
 
+import br.unipar.central.enums.TipoTransacaoEnum;
 import br.unipar.central.models.Agencia;
 import br.unipar.central.models.Banco;
 import br.unipar.central.models.Cidade;
@@ -27,6 +28,8 @@ import br.unipar.central.repositories.TransacaoDAO;
 import br.unipar.central.services.PaisService;
 import br.unipar.central.services.TransacaoService;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.JOptionPane;
 /**
@@ -51,7 +54,14 @@ public class UniparCentral {
             //service.insert(pais);
             //service.update(pais);
             //service.delete(525257);
-
+            
+            Transacao transacao = new Transacao();
+            transacao.setTipo(TipoTransacaoEnum.TED);
+            transacao.setDataHora(new Timestamp(System.currentTimeMillis()));
+            transacao.setValor(548);
+            transacao.setContaOrigem();
+            
+            
         //  EstadoDAO estadoDAO = new EstadoDAO();
         //  List<Estado> listaEstados = estadoDAO.findAll();
         //  System.out.println(listaEstados.toString());
